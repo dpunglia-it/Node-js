@@ -6,3 +6,4 @@ console.log("OS type :",os.type());
 console.log("OS Architecture :",os.arch());
 console.log("OS Release :",os.release());
 console.log("OS Hostname :",os.hostname());
+console.log("OS user :",os.userInfo());
