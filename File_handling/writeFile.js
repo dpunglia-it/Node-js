@@ -1,6 +1,9 @@
 const fs= require("fs");
 
-fs.readFile("data1.txt","utf-8", (err,data1) =>{
-     console.log(data1);
-})
+ fs.writeFile("data.txt","Hey there","utf-8",() => {
+   console.log("File Written!");
+ })
 
+ fs.unlink("data.txt", () => {
+    console.log("file deleted");
+ })
