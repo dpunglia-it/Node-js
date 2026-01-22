@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Darshit Punglia",
+    "role": "Software Engineer",
+    "department": "Development",
+    "email": "darshit@example.com",
+    "salary": 60000,
+    "isActive": true
+  },
+  {
+    "id": 2,
+    "name": "Amit Sharma",
+    "role": "Frontend Developer",
+    "department": "UI/UX",
+    "email": "amit@example.com",
+    "salary": 55000,
+    "isActive": true
+  },
+  {
+    "id": 3,
+    "name": "Neha Verma",
+    "role": "Backend Developer",
+    "department": "API",
+    "email": "neha@example.com",
+    "salary": 65000,
+    "isActive": false
+  },
+  {
+    "id": 4,
+    "name": "Rohit Mehta",
+    "role": "QA Engineer",
+    "department": "Testing",
+    "email": "rohit@example.com",
+    "salary": 45000,
+  }
+]
