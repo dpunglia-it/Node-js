@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Study Room Chat</h2>
+    <ul id="messages"></ul>
+
+    <input id="input" />
+    <button onclick="sendMsg()">Send</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      // Connect with token (middleware)
+      const socket = io({
+        auth: {
+          token: "study123" // try changing this to see block
+        }
+      });
+
+      const messages = document.getElementById("messages");
+      const input = document.getElementById("input");
+
+      function addMessage(text) {
+        const li = document.createElement("li");
+        li.textContent = text;
+        messages.appendChild(li);
+      }
+
+      // System messages
+      socket.on("system", (msg) => {
+        addMessage("[SYSTEM] " + msg);
+      });
+
+      // Chat messages
+      socket.on("chat", (msg) => {
+        addMessage(msg);
+      });
+
+      function sendMsg() {
+        socket.emit("chat", input.value);
+        input.value = "";
+      }
+
+      // Error from middleware
+      socket.on("connect_error", (err) => {
+        alert(err.message);
+      });
+    </script>
+  </body>
+</html>
