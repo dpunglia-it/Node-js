@@ -17,6 +17,7 @@ app.get("/api/data", (req,res) => {
 })
 
 app.post("/api/enter", (req,res) => {
+    
     console.log(req.body);
     const data = `ID: ${req.body.id} , Name: ${req.body.name}`;
     fs.appendFile("writeData.txt",data,(err) => {
