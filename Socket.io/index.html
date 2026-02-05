@@ -6,18 +6,17 @@
 
     <input id="input" />
     <button onclick="sendMsg()">Send</button>
+    <button onclick="sendAdmin()">Send as Admin</button>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      // Connect with token (middleware)
-      const socket = io({
-        auth: {
-          token: "study123" // try changing this to see block
-        }
-      });
+      // Connect with middleware
+      const socket = io({ auth: { token: "study123" }});
 
       const messages = document.getElementById("messages");
       const input = document.getElementById("input");
+
+      const adminSocket = io("/admin");
 
       function addMessage(text) {
         const li = document.createElement("li");
@@ -25,12 +24,10 @@
         messages.appendChild(li);
       }
 
-      // System messages
       socket.on("system", (msg) => {
         addMessage("[SYSTEM] " + msg);
       });
 
-      // Chat messages
       socket.on("chat", (msg) => {
         addMessage(msg);
       });
@@ -40,10 +37,16 @@
         input.value = "";
       }
 
+       function sendAdmin() {
+        adminSocket.emit("admin-chat", input.value);
+        input.value = "";
+      }
+
       // Error from middleware
       socket.on("connect_error", (err) => {
         alert(err.message);
       });
+
     </script>
   </body>
 </html>
