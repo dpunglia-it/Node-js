@@ -43,7 +43,6 @@ io.on("connection", async (socket) => {
   // Send history only to this new user
   oldMessages.forEach(msg => { socket.emit("chat", msg)});
 
-
   socket.emit("system", "Welcome to study room");    // Private msg
   console.log("Private emit : Welcome sent to", socket.id);
 
@@ -55,13 +54,15 @@ io.on("connection", async (socket) => {
 
     // saving new msg
      await redis.rPush("study-room:messages", msg);
+
      // Keep only last 50 messages
      await redis.lTrim("study-room:messages", -50, -1);
 
+     // Delete msg after 30 sec
      await redis.expire("study-room:messages", 30);
 
-    io.to("study-room").emit("chat", msg);
-    console.log("Chat broadcast to room");
+     io.to("study-room").emit("chat", msg);
+     console.log("Chat broadcast to room");
   });
 
   socket.on("disconnect", () => {
@@ -71,6 +72,7 @@ io.on("connection", async (socket) => {
   });
 });
 
+// admin namespace
 const admin = io.of("/admin");
 
 admin.on("connection", (socket) => {
@@ -78,12 +80,14 @@ admin.on("connection", (socket) => {
   socket.on("admin-chat", async (msg) => {
      const adminMsg = "[ADMIN] " + msg;
 
-    // Saving admin msg
-    await redis.rPush("study-room:messages", adminMsg);
-    // Keep only last 50 messages
-    await redis.lTrim("study-room:messages", -50, -1);
-    await redis.expire("study-room:messages", 30);
-    io.to("study-room").emit("chat", "[ADMIN] " + msg);
+     // Saving admin msg
+     await redis.rPush("study-room:messages", adminMsg);
+
+     // Keep only last 50 messages
+     await redis.lTrim("study-room:messages", -50, -1);
+     
+     await redis.expire("study-room:messages", 30);
+     io.to("study-room").emit("chat", "[ADMIN] " + msg);
   });
 });
 
