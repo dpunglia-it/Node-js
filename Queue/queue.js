@@ -6,3 +6,4 @@ export const connection = {
 };
 
 export const emailQueue = new Queue("emailQueue", { connection });
+export const Practice_queue = new Queue("Practice_queue", { connection });
